@@ -1,3 +1,4 @@
+
 # Python
 __pycache__/
 *.py[cod]
@@ -9,13 +10,6 @@ venv/
 build/
 assets/
 !assets/alarm.mp3
-# Keep assets folder but ignore other generated assets if any, though alarm.mp3 is needed.
-# Actually, for now let's keep all assets as the user likely wants to keep the mp3.
-# Re-writing rule to just ignore build artifacts.
 
-# Mac
+# OS
 .DS_Store
-
-# IDE
-.vscode/
-.idea/
