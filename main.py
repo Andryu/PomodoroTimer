@@ -121,10 +121,54 @@ def main(page: ft.Page):
         tooltip="Switch Mode (Work/Break)"
     )
 
+    # Settings Components
+    work_input = ft.TextField(label="Work (min)", value="25", width=100)
+    break_input = ft.TextField(label="Break (min)", value="5", width=100)
+
+    def close_dlg(e):
+        settings_dialog.open = False
+        page.update()
+
+    def save_settings(e):
+        try:
+            w = int(work_input.value)
+            b = int(break_input.value)
+            timer.set_duration(w, b)
+            settings_dialog.open = False
+            page.snack_bar = ft.SnackBar(ft.Text("Settings saved!"))
+            page.snack_bar.open = True
+            page.update()
+        except ValueError:
+            page.snack_bar = ft.SnackBar(ft.Text("Please enter valid numbers"))
+            page.snack_bar.open = True
+            page.update()
+
+    settings_dialog = ft.AlertDialog(
+        modal=True,
+        title=ft.Text("Settings"),
+        content=ft.Row([work_input, break_input]),
+        actions=[
+            ft.TextButton("Cancel", on_click=close_dlg),
+            ft.TextButton("Save", on_click=save_settings),
+        ],
+        actions_alignment=ft.MainAxisAlignment.END,
+    )
+
+    def open_settings(e):
+        page.dialog = settings_dialog
+        settings_dialog.open = True
+        page.update()
+
     # Layout
     page.add(
         ft.Column(
             [
+                ft.Row(
+                    [
+                        ft.IconButton(icon=ft.icons.SETTINGS, on_click=open_settings, tooltip="Settings")
+                    ],
+                    alignment=ft.MainAxisAlignment.END
+                ),
                 task_input,
                 ft.Container(height=20),
                 status_text,
