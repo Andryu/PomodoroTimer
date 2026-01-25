@@ -126,15 +126,14 @@ def main(page: ft.Page):
     break_input = ft.TextField(label="Break (min)", value="5", width=100)
 
     def close_dlg(e):
-        settings_dialog.open = False
-        page.update()
+        page.close(settings_dialog)
 
     def save_settings(e):
         try:
             w = int(work_input.value)
             b = int(break_input.value)
             timer.set_duration(w, b)
-            settings_dialog.open = False
+            page.close(settings_dialog)
             page.snack_bar = ft.SnackBar(ft.Text("Settings saved!"))
             page.snack_bar.open = True
             page.update()
@@ -155,9 +154,7 @@ def main(page: ft.Page):
     )
 
     def open_settings(e):
-        page.dialog = settings_dialog
-        settings_dialog.open = True
-        page.update()
+        page.open(settings_dialog)
 
     # Layout
     page.add(
