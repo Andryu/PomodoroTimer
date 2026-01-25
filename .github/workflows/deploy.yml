@@ -1,28 +1,37 @@
-name: Flet Web App Deploy
+name: Flet Web Deploy
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
-  flet-build:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: '3.11'
+
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install flet
+          pip install -r requirements.txt
+
       - name: Build Flet App
         run: |
-          flet publish main.py --dest dist
+          # Publish to 'dist' folder with base URL matching repository name
+          # Adjust --base-url if your repo name is different
+          flet publish main.py --base-url /PomodoroTimer/
+
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          folder: dist
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
