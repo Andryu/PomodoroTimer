@@ -3,6 +3,7 @@ from timer_logic import PomodoroTimer
 import os
 
 def main(page: ft.Page):
+    print(f"Flet version: {ft.version}")
     page.title = "Pomodoro Timer"
     page.theme_mode = ft.ThemeMode.DARK
     page.window_width = 400
@@ -14,9 +15,13 @@ def main(page: ft.Page):
 
     # Audio for alarm
     # Ensure you have an 'alarm.mp3' in assets or update the path.
-    # For now, we will add the Audio control but it might not play if file is missing.
-    alarm_audio = ft.Audio(src="assets/alarm.mp3", autoplay=False)
-    page.overlay.append(alarm_audio)
+    alarm_audio = None
+    try:
+        alarm_audio = ft.Audio(src="assets/alarm.mp3", autoplay=False)
+        page.overlay.append(alarm_audio)
+    except AttributeError:
+        print("Warning: ft.Audio not supported in this environment.")
+
 
     # State
     timer = None
@@ -55,7 +60,8 @@ def main(page: ft.Page):
 
     def on_timer_complete():
         # Play sound
-        # active_audio.play() # Uncomment if file exists
+        if alarm_audio:
+            alarm_audio.play()
         page.snack_bar = ft.SnackBar(ft.Text("Time's up! Take a break!"))
         page.snack_bar.open = True
 
