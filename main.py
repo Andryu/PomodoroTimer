@@ -165,7 +165,7 @@ def main(page: ft.Page):
             [
                 ft.Row(
                     [
-                        ft.IconButton(icon=ft.icons.SETTINGS, on_click=open_settings, tooltip="Settings")
+                        ft.IconButton(icon="settings", on_click=open_settings, tooltip="Settings")
                     ],
                     alignment=ft.MainAxisAlignment.END
                 ),
