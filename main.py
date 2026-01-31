@@ -54,8 +54,8 @@ def main(page: ft.Page):
     def advance_mode():
         new_mode = timer.switch_mode()
         status_text.value = new_mode
-        start_button.text = "Start"
-        start_button.icon = "play_arrow"
+        start_btn_text.value = "Start"
+        start_btn_icon.name = "play_arrow"
         page.update()
 
     def on_timer_complete():
@@ -87,27 +87,28 @@ def main(page: ft.Page):
     def start_timer(e):
         if not timer.is_running:
             timer.start()
-            start_button.text = "Pause"
-            start_button.icon = "pause"
+            start_btn_text.value = "Pause"
+            start_btn_icon.name = "pause"
             page.update()
         else:
             timer.pause()
-            start_button.text = "Start"
-            start_button.icon = "play_arrow"
+            start_btn_text.value = "Start"
+            start_btn_icon.name = "play_arrow"
             page.update()
 
     def reset_timer(e):
         timer.reset()
-        start_button.text = "Start"
-        start_button.icon = "play_arrow"
+        start_btn_text.value = "Start"
+        start_btn_icon.name = "play_arrow"
         page.update()
 
     def switch_mode(e):
         advance_mode()
 
+    start_btn_text = ft.Text("Start")
+    start_btn_icon = ft.Icon("play_arrow")
     start_button = ft.ElevatedButton(
-        text="Start",
-        icon="play_arrow",
+        content=ft.Row([start_btn_icon, start_btn_text], alignment=ft.MainAxisAlignment.CENTER, spacing=5),
         on_click=start_timer,
         style=ft.ButtonStyle(
             shape=ft.RoundedRectangleBorder(radius=10),
@@ -189,4 +190,4 @@ def main(page: ft.Page):
     )
 
 if __name__ == "__main__":
-    ft.app(target=main)
+    ft.run(target=main)
