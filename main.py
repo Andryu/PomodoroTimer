@@ -116,14 +116,14 @@ def main(page: ft.Page):
         )
     )
 
-    reset_button = ft.IconButton(
-        icon="refresh",
+    reset_button = ft.TextButton(
+        content=ft.Icon("refresh"),
         on_click=reset_timer,
         tooltip="Reset Timer"
     )
 
-    mode_button = ft.IconButton(
-        icon="swap_horiz",
+    mode_button = ft.TextButton(
+        content=ft.Icon("swap_horiz"),
         on_click=switch_mode,
         tooltip="Switch Mode (Work/Break)"
     )
@@ -169,7 +169,7 @@ def main(page: ft.Page):
             [
                 ft.Row(
                     [
-                        ft.IconButton(icon="settings", on_click=open_settings, tooltip="Settings")
+                        ft.TextButton(content=ft.Icon("settings"), on_click=open_settings, tooltip="Settings")
                     ],
                     alignment=ft.MainAxisAlignment.END
                 ),
